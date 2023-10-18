@@ -50,4 +50,30 @@ public class RadheyDbContext : IdentityDbContext<TblApplicationUser>
     }
 
 
+--------------------------------------------------
+4   
+
+install         Microsoft.EntityFrameworkCore.SqlServer
+
+Program.cs
+
+
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+
+builder.Services.AddDbContext<RadheyDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+
+builder.Services.AddIdentityCore<TblApplicationUser>().AddEntityFrameworkStores<RadheyDbContext>();
+
+
+----------------------------------------------------------
+
+
+
+
+
+
 
