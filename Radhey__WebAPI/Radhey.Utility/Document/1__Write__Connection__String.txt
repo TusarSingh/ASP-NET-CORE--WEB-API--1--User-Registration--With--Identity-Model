@@ -94,6 +94,37 @@ enable-migrations
 Add-Migration Initial_Model_TblApplicationUser
 Update-Database
 
+--------------------------------------------------------
+6
+
+Radhey.DAL.IdentityTables
+
+TblApplicationUser : IdentityUser
+
+Write a Properties 
+
+  public string LastName { get; set; }
+
+
+----------------------------------------------------------
+7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

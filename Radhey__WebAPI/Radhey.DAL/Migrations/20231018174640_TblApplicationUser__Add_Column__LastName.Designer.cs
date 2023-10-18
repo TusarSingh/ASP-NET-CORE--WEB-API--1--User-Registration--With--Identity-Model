@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Radhey.DAL.DatabaseContext;
 
@@ -11,9 +12,11 @@ using Radhey.DAL.DatabaseContext;
 namespace Radhey.DAL.Migrations
 {
     [DbContext(typeof(RadheyDbContext))]
-    partial class RadheyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231018174640_TblApplicationUser__Add_Column__LastName")]
+    partial class TblApplicationUser__Add_Column__LastName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
