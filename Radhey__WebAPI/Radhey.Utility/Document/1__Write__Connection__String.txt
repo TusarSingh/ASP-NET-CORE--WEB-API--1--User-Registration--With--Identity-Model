@@ -1,0 +1,6 @@
+Write Connection String in Radhey.API.appSettings.json File
+
+
+  "ConnectionStrings": {
+    "Default": "Data Source=TANUCOMPUTER;Initial Catalog=PRTC__PRJT__1__Radhey__WebApi_DotNetCore_8_0;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+  }

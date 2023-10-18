@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Radhey.DAL.DatabaseContext
 {
-    public class RadheyDbContext
+    public class RadheyDbContext 
     {
     }
 }

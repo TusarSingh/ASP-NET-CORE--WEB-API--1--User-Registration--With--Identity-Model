@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Radhey.DAL.IdentityTables
 {
-    public class TblApplicationUser
+    public class TblApplicationUser 
     {
+
+        
+
+
     }
 }
