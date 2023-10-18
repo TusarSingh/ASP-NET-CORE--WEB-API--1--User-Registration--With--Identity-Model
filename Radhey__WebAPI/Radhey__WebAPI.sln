@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34112.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radhey.API", "Radhey.API\Radhey.API.csproj", "{0F010C3A-F4E3-4571-89D3-C55AFDBB943B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radhey.API", "Radhey.API\Radhey.API.csproj", "{0F010C3A-F4E3-4571-89D3-C55AFDBB943B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radhey.BAL", "Radhey.BAL\Radhey.BAL.csproj", "{30AE8498-DE8D-4956-ABFB-E301102A3783}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radhey.BAL", "Radhey.BAL\Radhey.BAL.csproj", "{30AE8498-DE8D-4956-ABFB-E301102A3783}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radhey.DAL", "Radhey.DAL\Radhey.DAL.csproj", "{92EC7655-1AFF-4EE0-9063-12D588362755}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radhey.DAL", "Radhey.DAL\Radhey.DAL.csproj", "{92EC7655-1AFF-4EE0-9063-12D588362755}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radhey.Repository", "Radhey.Repository\Radhey.Repository.csproj", "{E3C319AD-C0E9-4321-9E85-46842D738B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radhey.Repository", "Radhey.Repository\Radhey.Repository.csproj", "{E3C319AD-C0E9-4321-9E85-46842D738B2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radhey.Model", "Radhey.Model\Radhey.Model.csproj", "{B291D2FC-3E77-4399-906C-9F5211601B16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radhey.Model", "Radhey.Model\Radhey.Model.csproj", "{B291D2FC-3E77-4399-906C-9F5211601B16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radhey.Utility", "Radhey.Utility\Radhey.Utility.csproj", "{F3B485A9-15C1-446D-8960-D38E5AF9A918}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radhey.Utility", "Radhey.Utility\Radhey.Utility.csproj", "{F3B485A9-15C1-446D-8960-D38E5AF9A918}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radhey.Dapper", "Radhey.Dapper\Radhey.Dapper.csproj", "{560C0F04-FB95-4B32-9CC8-FB31B578CFB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radhey.Dapper", "Radhey.Dapper\Radhey.Dapper.csproj", "{560C0F04-FB95-4B32-9CC8-FB31B578CFB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
