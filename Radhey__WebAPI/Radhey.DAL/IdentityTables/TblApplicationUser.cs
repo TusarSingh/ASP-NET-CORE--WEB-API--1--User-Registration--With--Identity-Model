@@ -12,8 +12,9 @@ namespace Radhey.DAL.IdentityTables
 {
     public class TblApplicationUser : IdentityUser
     {
+        #nullable disable
 
-#nullable disable
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
