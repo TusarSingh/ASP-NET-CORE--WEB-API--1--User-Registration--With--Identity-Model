@@ -4,8 +4,10 @@ Write Connection String in Radhey.API.appSettings.json File
 
 
   "ConnectionStrings": {
-    "Default": "Data Source=TANUCOMPUTER;Initial Catalog=PRTC__PRJT__1__Radhey__WebApi_DotNetCore_8_0;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
-  }
+    "DefaultConnection": "Data Source=TANUCOMPUTER;Initial Catalog=PRTC__PRJT__1__Radhey__WebApi__DotNetCore__8_0;Integrated Security=True;Encrypt=False;TrustServerCertificate=True;"
+    //Connect Timeout=30;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
+
+  },
 
 
 ------------------------------------------------------
@@ -70,6 +72,28 @@ builder.Services.AddIdentityCore<TblApplicationUser>().AddEntityFrameworkStores<
 
 
 ----------------------------------------------------------
+5
+
+install     Microsoft.EntityFrameworkCore.Tools
+install         Microsoft.EntityFrameworkCore.SqlServer
+install         Microsoft.EntityFrameworkCore.Design
+
+
+Radhey.DAL
+
+
+install         Microsoft.EntityFrameworkCore.Tool
+install         Microsoft.EntityFrameworkCore.Design
+
+Radhey.API
+
+
+Package manager Console                 Select Project      Radhey.DAL
+
+enable-migrations
+Add-Migration Initial_Model_TblApplicationUser
+Update-Database
+
 
 
 

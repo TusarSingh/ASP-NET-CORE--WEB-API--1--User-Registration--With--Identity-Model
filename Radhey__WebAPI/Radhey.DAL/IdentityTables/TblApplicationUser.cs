@@ -12,8 +12,7 @@ namespace Radhey.DAL.IdentityTables
 {
     public class TblApplicationUser : IdentityUser
     {
-
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
 
     }
