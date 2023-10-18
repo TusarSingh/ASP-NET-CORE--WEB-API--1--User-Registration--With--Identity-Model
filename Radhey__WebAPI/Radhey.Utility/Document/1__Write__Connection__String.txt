@@ -24,7 +24,30 @@ Write Connection String in Radhey.API.appSettings.json File
 
     }
 
+---------------------------------------------------------------
+3
 
+        Radhey.DAL.DatabaseContext
+
+public class RadheyDbContext : IdentityDbContext<TblApplicationUser>
+    {
+        
+        public RadheyDbContext(DbContextOptions<RadheyDbContext> options) : base(options)
+        {
+            
+        }
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
+
+        public DbSet<TblApplicationUser> AspNetUser {  get; set; }
+
+
+    }
 
 
 
