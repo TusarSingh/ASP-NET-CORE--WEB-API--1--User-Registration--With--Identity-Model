@@ -10,10 +10,10 @@ namespace Radhey.Model.CommonModel
     public class ResponseComModel
     {
 #nullable disable
-        public ResponseComModel()
-        {
-            this.StatusCode = (int)HttpStatusCode.OK;
-        }
+        //public ResponseComModel()
+        //{
+        //    this.StatusCode = (int)HttpStatusCode.OK;
+        //}
 
         public int StatusCode { get; set; }
 

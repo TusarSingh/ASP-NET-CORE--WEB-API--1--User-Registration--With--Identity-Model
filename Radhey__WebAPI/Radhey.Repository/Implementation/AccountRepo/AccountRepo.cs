@@ -44,6 +44,7 @@ namespace Radhey.Repository.Implementation.AccountRepo
             {
                 FirstName = userRegistrationReq.FirstName,
                 LastName = userRegistrationReq.LastName,
+                UserName = userRegistrationReq.Email,
                 Email = userRegistrationReq.Email,
                 PasswordHash = userRegistrationReq.Password,
                 PhoneNumber = userRegistrationReq.Phone
@@ -54,14 +55,10 @@ namespace Radhey.Repository.Implementation.AccountRepo
             if (saveResult.Succeeded)
             {
                 response.StatusCode = 200;
-                response.IsSuccess = true;
-                response.StatusMessage = "Registration Successfully";
             }
             else
             {
                 response.StatusCode = 400;
-                response.IsSuccess = true;
-                response.StatusMessage = "Registration Failed";
             }
 
             return response;

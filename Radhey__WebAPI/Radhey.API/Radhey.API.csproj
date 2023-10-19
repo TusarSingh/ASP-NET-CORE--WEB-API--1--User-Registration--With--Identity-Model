@@ -24,8 +24,4 @@
     <ProjectReference Include="..\Radhey.BAL\Radhey.BAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
