@@ -35,7 +35,37 @@ namespace Radhey.Repository.Implementation.AccountRepo
 
 
 
+        #region 
+        //public async Task<ResponseComModel> UserRegistration(UserRegistrationReqModel userRegistrationReq)
+        //{
+        //    ResponseComModel response = new ResponseComModel();
 
+        //    TblApplicationUser User = new TblApplicationUser()
+        //    {
+        //        FirstName = userRegistrationReq.FirstName,
+        //        LastName = userRegistrationReq.LastName,
+        //        UserName = userRegistrationReq.Email,
+        //        Email = userRegistrationReq.Email,
+        //        PasswordHash = userRegistrationReq.Password,
+        //        PhoneNumber = userRegistrationReq.Phone
+        //    };
+
+        //    var saveResult = await _userManager.CreateAsync(User).ConfigureAwait(false);
+
+        //    if (saveResult.Succeeded)
+        //    {
+        //        response.StatusCode = 200;
+        //    }
+        //    else
+        //    {
+        //        response.StatusCode = 400;
+        //    }
+
+        //    return response;
+            
+        //}
+
+        #endregion
         public async Task<ResponseComModel> UserRegistration(UserRegistrationReqModel userRegistrationReq)
         {
             ResponseComModel response = new ResponseComModel();
@@ -50,7 +80,7 @@ namespace Radhey.Repository.Implementation.AccountRepo
                 PhoneNumber = userRegistrationReq.Phone
             };
 
-            var saveResult = await _userManager.CreateAsync(User).ConfigureAwait(false);
+            var saveResult = await _userManager.CreateAsync(User,userRegistrationReq.Password).ConfigureAwait(false);
 
             if (saveResult.Succeeded)
             {
@@ -64,6 +94,13 @@ namespace Radhey.Repository.Implementation.AccountRepo
             return response;
             
         }
+
+
+
+
+
+
+
     }
 
 

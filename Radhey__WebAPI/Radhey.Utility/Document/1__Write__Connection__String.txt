@@ -168,6 +168,104 @@ namespace Radhey.Model.CommonModel
 ------------------------------------------------------------------------
 9
 
+ public class AccountController : ControllerBase
+    {
+
+        private readonly IAccountBAL _accountBAL;
+
+
+
+        public AccountController(IAccountBAL accountBAL)
+        {
+            this._accountBAL = accountBAL;
+        }
+
+
+        [HttpPost]
+        [Route("UserRegistration")]
+        public async Task<IActionResult> UserRegistration(UserRegistrationReqModel userRegistrationReq)
+        {
+            ResponseComModel apiResponse = new ResponseComModel();
+            
+            if (userRegistrationReq != null)
+            {
+                apiResponse = await _accountBAL.UserRegistration(userRegistrationReq).ConfigureAwait(false);
+            
+                switch (apiResponse.StatusCode)
+                {
+                        case 200:   apiResponse = new ResponseComModel()
+                        {
+                            StatusCode = 200,
+                            IsSuccess = true,
+                            StatusMessage = "User Registration Successfully"
+                        };
+                        return Ok(apiResponse);
+                        
+                        case 400:   apiResponse = new ResponseComModel()
+                            {
+                            StatusCode = 400,
+                            IsSuccess = false,
+                            StatusMessage = "User Registration Failed"
+                        };
+                        return BadRequest(apiResponse);
+                    
+                        default:   apiResponse = new ResponseComModel()
+                        {
+                            StatusCode = 500,
+                            IsSuccess = false,
+                            StatusMessage = "Internal Server Error"
+                        };
+                        return Ok(apiResponse);       
+                }            
+            }
+            else
+            {
+                apiResponse = new ResponseComModel()
+                {
+                    StatusCode = 500,
+                    IsSuccess = false,
+                    StatusMessage = "Internal Server Error"
+                };
+                return Ok(apiResponse);
+            }
+        }
+
+    }
+
+    ==================================================
+    TblApplicationUser User = new TblApplicationUser()
+            {
+                FirstName = userRegistrationReq.FirstName,
+                LastName = userRegistrationReq.LastName,
+                UserName = userRegistrationReq.Email,
+                Email = userRegistrationReq.Email,
+                PasswordHash = userRegistrationReq.Password,
+                PhoneNumber = userRegistrationReq.Phone
+            };
+
+            var saveResult = await _userManager.CreateAsync(User).ConfigureAwait(false);
+
+            if (saveResult.Succeeded)
+            {
+                response.StatusCode = 200;
+            }
+            else
+            {
+                response.StatusCode = 400;
+            }
+
+            return response;
+    ==================================================
+
+builder.Services.AddScoped<IAccountBAL, AccountBAL>();
+builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+
+
+-----------------------------------------------------------------------------------------------
+10
+
+
+
 
 
 
