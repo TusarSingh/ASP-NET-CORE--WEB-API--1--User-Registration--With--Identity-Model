@@ -17,6 +17,6 @@ namespace Radhey.BAL.Interface.IAccountBAL
 
         public Task<ResponseComModel> UserRegistration(UserRegistrationReqModel userRegistrationReq);
 
-
+        public Task<ResponseComModel> UserLogin(UserLoginReqModel userLoginReq);
     }
 }

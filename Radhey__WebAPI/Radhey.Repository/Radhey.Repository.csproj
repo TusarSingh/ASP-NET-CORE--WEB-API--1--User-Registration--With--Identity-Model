@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Radhey.DAL\Radhey.DAL.csproj" />
     <ProjectReference Include="..\Radhey.Dapper\Radhey.Dapper.csproj" />
     <ProjectReference Include="..\Radhey.Model\Radhey.Model.csproj" />

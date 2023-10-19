@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
+using Microsoft.AspNetCore.Identity;
 using Radhey.BAL.Interface.IAccountBAL;
+using Radhey.DAL.IdentityTables;
 using Radhey.Model.CommonModel;
 using Radhey.Model.RequestModel;
 using Radhey.Repository;
@@ -20,13 +23,12 @@ namespace Radhey.BAL.Implementation.AccountBAL
     {
 
         public readonly IAccountRepo _accountRepo;
-
-
+        
 
 
         public AccountBAL(IAccountRepo accountRepo)
         {
-            this._accountRepo = accountRepo; 
+            this._accountRepo = accountRepo;
         }
 
 
@@ -39,6 +41,18 @@ namespace Radhey.BAL.Implementation.AccountBAL
             
             return response;
 
+        }
+
+
+
+
+        public async Task<ResponseComModel> UserLogin(UserLoginReqModel userLoginReq)
+        {
+            ResponseComModel response;
+
+            response = await _accountRepo.UserLogin(userLoginReq).ConfigureAwait(false);
+
+            return response;
         }
 
 

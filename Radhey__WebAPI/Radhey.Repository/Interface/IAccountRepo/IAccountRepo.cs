@@ -15,7 +15,7 @@ namespace Radhey.Repository.Interface.IAccountRepo
 
         public Task<ResponseComModel> UserRegistration(UserRegistrationReqModel userRegistrationReq);
 
-
+        public Task<ResponseComModel> UserLogin(UserLoginReqModel userLoginReq);
 
 
 
