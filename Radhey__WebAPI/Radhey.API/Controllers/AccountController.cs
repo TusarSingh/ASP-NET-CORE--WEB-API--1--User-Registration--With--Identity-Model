@@ -31,15 +31,17 @@ namespace Radhey.API.Controllers
 
         #region User Registration
 
+        #region User Registration Create Async
+
         [HttpPost]
-        [Route("UserRegistration")]
-        public async Task<IActionResult> UserRegistration(UserRegistrationReqModel userRegistrationReq)
+        [Route("UserRegistrationCreateAsync")]
+        public async Task<IActionResult> UserRegistrationCreateAsync(UserRegistrationReqModel userRegistrationReq)
         {
             ResponseComModel apiResponse = new ResponseComModel();
             
             if (userRegistrationReq != null)
             {
-                apiResponse = await _accountBAL.UserRegistration(userRegistrationReq).ConfigureAwait(false);
+                apiResponse = await _accountBAL.UserRegistrationCreateAsync(userRegistrationReq).ConfigureAwait(false);
             
                 switch (apiResponse.StatusCode)
                 {
@@ -82,6 +84,60 @@ namespace Radhey.API.Controllers
 
         #endregion
 
+        #region User Registration Create Async With Password
+
+        [HttpPost]
+        [Route("UserRegistrationCreateAsyncWithPassword")]
+        public async Task<IActionResult> UserRegistrationCreateAsyncWithPassword(UserRegistrationReqModel userRegistrationReq)
+        {
+            ResponseComModel apiResponse = new ResponseComModel();
+            
+            if (userRegistrationReq != null)
+            {
+                apiResponse = await _accountBAL.UserRegistrationCreateAsyncWithPassword(userRegistrationReq).ConfigureAwait(false);
+            
+                switch (apiResponse.StatusCode)
+                {
+                        case 200:   apiResponse = new ResponseComModel()
+                        {
+                            StatusCode = 200,
+                            IsSuccess = true,
+                            StatusMessage = "User Registration Successfully"
+                        };
+                        return Ok(apiResponse);
+                        
+                        case 400:   apiResponse = new ResponseComModel()
+                            {
+                            StatusCode = 400,
+                            IsSuccess = false,
+                            StatusMessage = "User Registration Failed"
+                        };
+                        return BadRequest(apiResponse);
+                    
+                        default:   apiResponse = new ResponseComModel()
+                        {
+                            StatusCode = 500,
+                            IsSuccess = false,
+                            StatusMessage = "Internal Server Error"
+                        };
+                        return Ok(apiResponse);       
+                }            
+            }
+            else
+            {
+                apiResponse = new ResponseComModel()
+                {
+                    StatusCode = 500,
+                    IsSuccess = false,
+                    StatusMessage = "Internal Server Error"
+                };
+                return Ok(apiResponse);
+            }
+        }
+
+        #endregion
+
+        #endregion
 
         #region User Login
 
@@ -129,7 +185,6 @@ namespace Radhey.API.Controllers
                         IsSuccess = false
                     };
                     return BadRequest(apiResponse);
-
 
                 }
             }
