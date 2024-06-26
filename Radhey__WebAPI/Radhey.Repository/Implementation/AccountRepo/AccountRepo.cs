@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 
 using Microsoft.AspNetCore.Identity;
+using Radhey.DAL.DatabaseContext;
 using Radhey.DAL.IdentityTables;
 using Radhey.Model.CommonModel;
 using Radhey.Model.RequestModel;
@@ -13,60 +14,37 @@ using Radhey.Repository.Interface.IAccountRepo;
 
 
 
+
+
 namespace Radhey.Repository.Implementation.AccountRepo
 {
     public class AccountRepo : IAccountRepo
     {
-
-        private readonly UserManager<TblApplicationUser> _userManager;
-        
-
+        private readonly ICustomUserManager _userManager;
+        private readonly ICustomSignInManager _signInManager;
 
 
 
 
 
 
-
-        public AccountRepo(UserManager<TblApplicationUser> userManager)
+        public AccountRepo(
+                            ICustomUserManager userManager
+                           , ICustomSignInManager signInManager
+                          )
         {
-                this._userManager = userManager;    
+            this._userManager = userManager;
+            this._signInManager = signInManager;
         }
 
 
 
-        #region 
-        //public async Task<ResponseComModel> UserRegistration(UserRegistrationReqModel userRegistrationReq)
-        //{
-        //    ResponseComModel response = new ResponseComModel();
 
-        //    TblApplicationUser User = new TblApplicationUser()
-        //    {
-        //        FirstName = userRegistrationReq.FirstName,
-        //        LastName = userRegistrationReq.LastName,
-        //        UserName = userRegistrationReq.Email,
-        //        Email = userRegistrationReq.Email,
-        //        PasswordHash = userRegistrationReq.Password,
-        //        PhoneNumber = userRegistrationReq.Phone
-        //    };
 
-        //    var saveResult = await _userManager.CreateAsync(User).ConfigureAwait(false);
+        #region User Registration
 
-        //    if (saveResult.Succeeded)
-        //    {
-        //        response.StatusCode = 200;
-        //    }
-        //    else
-        //    {
-        //        response.StatusCode = 400;
-        //    }
-
-        //    return response;
-            
-        //}
-
-        #endregion
-        public async Task<ResponseComModel> UserRegistration(UserRegistrationReqModel userRegistrationReq)
+        #region User Registration Create Async => CreateAsync(User)
+        public async Task<ResponseComModel> UserRegistrationCreateAsync(UserRegistrationReqModel userRegistrationReq)
         {
             ResponseComModel response = new ResponseComModel();
 
@@ -80,8 +58,40 @@ namespace Radhey.Repository.Implementation.AccountRepo
                 PhoneNumber = userRegistrationReq.Phone
             };
 
-            var saveResult = await _userManager.CreateAsync(User,userRegistrationReq.Password).ConfigureAwait(false);
+            var saveResult = await _userManager.PostCreateAsync(User).ConfigureAwait(false);
 
+            if (saveResult.Succeeded)
+            {
+                response.StatusCode = 200;
+            }
+            else
+            {
+                response.StatusCode = 400;
+            }
+
+            return response;
+
+        }
+
+        #endregion
+
+        #region User Registration Create Async With Password => CreateAsync(User,userRegistrationReq.Password)
+        public async Task<ResponseComModel> UserRegistrationCreateAsyncWithPassword(UserRegistrationReqModel userRegistrationReq)
+        {
+            ResponseComModel response = new ResponseComModel();
+
+            TblApplicationUser User = new TblApplicationUser()
+            {
+                FirstName = userRegistrationReq.FirstName,
+                LastName = userRegistrationReq.LastName,
+                UserName = userRegistrationReq.Email,
+                Email = userRegistrationReq.Email,
+                PasswordHash = userRegistrationReq.Password,
+                PhoneNumber = userRegistrationReq.Phone
+            };
+
+            var saveResult = await _userManager.PostCreateAsync(User,userRegistrationReq.Password).ConfigureAwait(false);
+            
             if (saveResult.Succeeded)
             {
                 response.StatusCode = 200;
@@ -95,10 +105,53 @@ namespace Radhey.Repository.Implementation.AccountRepo
             
         }
 
+        #endregion
+
+        #endregion
+
+
+        #region UserLogin
+
+        public async Task<ResponseComModel> UserLogin(UserLoginReqModel userLoginReq)
+        {
+            ResponseComModel response = new ResponseComModel();
+
+            TblApplicationUser tblApplicationUser = new TblApplicationUser();
+
+            var chkUserEmail = await _userManager.GetFindByEmailAsync(userLoginReq.Email).ConfigureAwait(false);
+        
+            if (chkUserEmail != null)
+            {
+                var chkPass = await _userManager.GetCheckPasswordAsync(chkUserEmail, userLoginReq.Password).ConfigureAwait(false);
 
 
 
+                if (chkPass)
+                {
+                    //var userLogin = await _signInManager.PasswordSignInAsync(chkUserEmail, userLoginReq.Password, false, false);
+                    var userLogin = await _signInManager.GetPasswordSignInAsync(userLoginReq.Email, userLoginReq.Password, false, false);
+                    
+                    
+                    response.StatusCode = 200;
 
+                }
+                else
+                {
+                    response.StatusCode = 400;
+                    response.StatusMessage = "Password is Wrong.";
+                }
+            }
+            else
+            {
+                response.StatusCode = 401;
+                response.StatusMessage = "Please Check your Email";
+            }
+
+            return response;
+        }
+
+
+        #endregion
 
 
     }

@@ -13,9 +13,10 @@ namespace Radhey.Repository.Interface.IAccountRepo
     public interface IAccountRepo
     {
 
-        public Task<ResponseComModel> UserRegistration(UserRegistrationReqModel userRegistrationReq);
+        public Task<ResponseComModel> UserRegistrationCreateAsync(UserRegistrationReqModel userRegistrationReq);
+        public Task<ResponseComModel> UserRegistrationCreateAsyncWithPassword(UserRegistrationReqModel userRegistrationReq);
 
-
+        public Task<ResponseComModel> UserLogin(UserLoginReqModel userLoginReq);
 
 
 

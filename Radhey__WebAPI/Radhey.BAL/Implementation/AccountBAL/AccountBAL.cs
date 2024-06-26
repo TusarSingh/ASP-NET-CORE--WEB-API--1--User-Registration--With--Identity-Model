@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
+using Microsoft.AspNetCore.Identity;
 using Radhey.BAL.Interface.IAccountBAL;
+using Radhey.DAL.IdentityTables;
 using Radhey.Model.CommonModel;
 using Radhey.Model.RequestModel;
 using Radhey.Repository;
@@ -20,28 +23,58 @@ namespace Radhey.BAL.Implementation.AccountBAL
     {
 
         public readonly IAccountRepo _accountRepo;
-
-
+        
 
 
         public AccountBAL(IAccountRepo accountRepo)
         {
-            this._accountRepo = accountRepo; 
+            this._accountRepo = accountRepo;
         }
 
 
+        #region User Registration
 
-        public async Task<ResponseComModel> UserRegistration(UserRegistrationReqModel userRegistrationReq)
+        #region User Registration Create Async => CreateAsync(User)
+        public async Task<ResponseComModel> UserRegistrationCreateAsync(UserRegistrationReqModel userRegistrationReq)
         {
             var response = new ResponseComModel();
 
-            response = await _accountRepo.UserRegistration(userRegistrationReq).ConfigureAwait(false);
+            response = await _accountRepo.UserRegistrationCreateAsync(userRegistrationReq).ConfigureAwait(false);
             
             return response;
 
         }
 
+        #endregion
 
+        #region User Registration Create Async With Password => CreateAsync(User,userRegistrationReq.Password)
+
+        public async Task<ResponseComModel> UserRegistrationCreateAsyncWithPassword(UserRegistrationReqModel userRegistrationReq)
+        {
+            var response = new ResponseComModel();
+
+            response = await _accountRepo.UserRegistrationCreateAsyncWithPassword(userRegistrationReq).ConfigureAwait(false);
+            
+            return response;
+
+        }
+
+        #endregion
+
+        #endregion
+
+        #region UserLogin
+
+        public async Task<ResponseComModel> UserLogin(UserLoginReqModel userLoginReq)
+        {
+            ResponseComModel response;
+
+            response = await _accountRepo.UserLogin(userLoginReq).ConfigureAwait(false);
+
+            return response;
+        }
+
+        #endregion
 
 
 

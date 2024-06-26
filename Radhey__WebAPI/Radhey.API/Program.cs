@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Radhey.Repository.Interface.IAccountRepo;
 using Radhey.Repository.Implementation.AccountRepo;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,11 +34,15 @@ builder.Services.AddControllers();
 
 
 
-builder.Services.AddScoped<IAccountBAL, AccountBAL>();
-builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddTransient<IAccountBAL, AccountBAL>();
+builder.Services.AddTransient<IAccountRepo, AccountRepo>();
+
+builder.Services.AddTransient<ICustomUserManager, CustomUserManager>();
+builder.Services.AddTransient<ICustomSignInManager, CustomSignInManager>();
 
 
-
+builder.Services.AddTransient<UserManager<TblApplicationUser>>();
+builder.Services.AddTransient<SignInManager<TblApplicationUser>>();
 
 
 
@@ -58,10 +63,12 @@ builder.Services.AddDbContext<RadheyDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 
-builder.Services.AddIdentityCore<TblApplicationUser>().AddEntityFrameworkStores<RadheyDbContext>();
+//builder.Services.AddIdentityCore<TblApplicationUser>().AddEntityFrameworkStores<RadheyDbContext>();
 
 
-
+builder.Services.AddIdentity<TblApplicationUser, IdentityRole>()
+        .AddEntityFrameworkStores<RadheyDbContext>()
+    .AddDefaultTokenProviders();
 
 
 
