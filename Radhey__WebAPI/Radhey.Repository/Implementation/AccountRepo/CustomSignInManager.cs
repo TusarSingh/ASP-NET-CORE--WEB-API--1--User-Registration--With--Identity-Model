@@ -17,14 +17,29 @@ namespace Radhey.Repository.Implementation.AccountRepo
         private readonly SignInManager<TblApplicationUser> _signInManager;
         
 
-        public CustomSignInManager(SignInManager<TblApplicationUser> signInManager
-                                    , UserManager<TblApplicationUser> userManager)
+        public CustomSignInManager(
+                                    UserManager<TblApplicationUser> userManager,
+                                    SignInManager<TblApplicationUser> signInManager
+                                  )
         {
-            this._signInManager = signInManager;
-            this._userManager = userManager;
+           this._userManager = userManager;
+           this._signInManager = signInManager;
         }
 
+        #region User Login 
 
+        public async Task<SignInResult> GetPasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure)
+        {
+            var a = await _signInManager.PasswordSignInAsync(userName, password, isPersistent, lockoutOnFailure);
+            return a;
+        }
+        public async Task<SignInResult> GetPasswordSignInAsync(TblApplicationUser user, string password, bool isPersistent, bool lockoutOnFailure)
+        {
+            var a = await _signInManager.PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
+            return a;
+        }
+
+        #endregion
 
         public async Task<bool> GetCanSignInAsync(TblApplicationUser user)
         {
@@ -97,16 +112,7 @@ namespace Radhey.Repository.Implementation.AccountRepo
         //    return a;
         //} 
 
-        public async Task<SignInResult> GetPasswordSignInAsync(string userName,string password,bool isPersistent,bool lockoutOnFailure)
-        {
-            var a = await _signInManager.PasswordSignInAsync(userName, password, isPersistent,lockoutOnFailure);
-            return a;
-        } 
-        public async Task<SignInResult> GetPasswordSignInAsync(TblApplicationUser user,string password,bool isPersistent,bool lockoutOnFailure)
-        {
-            var a = await _signInManager.PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
-            return a;
-        } 
+       
         //public async Task<SignInResult> GetPreSignInCheck(TblApplicationUser user)
         //{
         //    var a = await _signInManager.PreSignInCheck(user);

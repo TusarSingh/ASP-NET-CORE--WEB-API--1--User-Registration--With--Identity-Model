@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Radhey.Model.CommonModel
 {
-    public class ResponseComModel
+    public class ResponseComModel // : ResponseComModel<object>
     {
 #nullable disable
         //public ResponseComModel()
@@ -26,7 +26,7 @@ namespace Radhey.Model.CommonModel
     }
 
 
-    public class ResponseComModel<T> : ResponseComModel
+    public class ResponseComModel<T> : ResponseComModel 
     {
         public T Data { get; set; }
 

@@ -11,7 +11,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Radhey.Repository.Interface.IAccountRepo;
 using Radhey.Repository.Implementation.AccountRepo;
+
+using Radhey.Repository.Interface.IAccountRepo.IIdentity_By_EFC__Repo.IUser_Registration_With_Identity_By_EFC__Repo;
+using Radhey.Repository.Implementation.AccountRepo.Identity_By_EFC__Repo.User_Registration_With_Identity_By_EFC__Repo;
+using Radhey.Repository.Interface.IAccountRepo.IIdentity_By_EFC__Repo.IUser_Login_With_Identity_By_EFC__Repo;
+using Radhey.Repository.Implementation.AccountRepo.Identity_By_EFC__Repo.User_Login_With_Identity_By_EFC__Repo;
+using Radhey.Repository.Interface.IAccountRepo.IIdentity_By_EFC__Repo.IGetAll_Users_With_Identity_By_EFC__Repo;
+using Radhey.Repository.Implementation.AccountRepo.Identity_By_EFC__Repo.GetAll_Users_With_Identity_By_EFC__Repo;
+
+
 using Microsoft.AspNetCore.Identity;
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,19 +41,25 @@ builder.Services.AddControllers();
 
 
 
-
+// All Services Register
 
 
 
 builder.Services.AddTransient<IAccountBAL, AccountBAL>();
 builder.Services.AddTransient<IAccountRepo, AccountRepo>();
 
+builder.Services.AddTransient<IUser_Registration_With_Identity_By_EFC__Repo, User_Registration_With_Identity_By_EFC__Repo>();
+builder.Services.AddTransient<IUser_Login_With_Identity_By_EFC__Repo, User_Login_With_Identity_By_EFC__Repo>();
+
+builder.Services.AddTransient<IGetAll_Users_With_Identity_By_EFC__Repo, GetAll_Users_With_Identity_By_EFC__Repo>();
+
+
 builder.Services.AddTransient<ICustomUserManager, CustomUserManager>();
 builder.Services.AddTransient<ICustomSignInManager, CustomSignInManager>();
 
 
-builder.Services.AddTransient<UserManager<TblApplicationUser>>();
-builder.Services.AddTransient<SignInManager<TblApplicationUser>>();
+builder.Services.AddScoped<UserManager<TblApplicationUser>>();
+builder.Services.AddScoped<SignInManager<TblApplicationUser>>();
 
 
 
@@ -105,7 +122,7 @@ if (app.Environment.IsDevelopment())
 
 
 
-
+// Middleware 
 
 
 

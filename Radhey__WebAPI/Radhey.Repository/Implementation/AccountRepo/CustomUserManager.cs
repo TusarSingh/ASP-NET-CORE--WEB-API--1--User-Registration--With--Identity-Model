@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Radhey.DAL.IdentityTables;
+using Radhey.Model.CommonModel;
 using Radhey.Repository.Interface.IAccountRepo;
 using Radhey.Utility.Common;
 using System;
@@ -30,7 +32,75 @@ namespace Radhey.Repository.Implementation.AccountRepo
 
         }
 
-        
+
+
+        #region User Registration
+        public async Task<IdentityResult> PostCreateAsync(TblApplicationUser user)
+        {
+            var a = await _userManager.CreateAsync(user);
+            return a;
+        }
+
+
+        public async Task<IdentityResult> PostCreateAsync(TblApplicationUser user, string password)
+        {
+            var a = await _userManager.CreateAsync(user, password);
+            return a;
+        }
+
+        #endregion
+
+
+
+
+        #region User Login
+        public async Task<TblApplicationUser?> GetFindByEmailAsync(string email)
+        {
+            var a = await _userManager.FindByEmailAsync(email);
+            return a;
+        }
+
+
+        public async Task<bool> GetCheckPasswordAsync(TblApplicationUser user, string checkPassword)
+        {
+            var a = await _userManager.CheckPasswordAsync(user, checkPassword);
+            return a;
+        }
+
+        #endregion
+
+
+
+        #region Use Properties for GetAllUsers
+
+        public async Task<ResponseComModel<object>> GetUser()
+        {
+            ResponseComModel<object> response = new ResponseComModel<object>();
+
+            var allUser = await _userManager.Users.ToListAsync().ConfigureAwait(false);
+
+            if(allUser == null)
+            {
+                response.StatusCode = 401;
+            }
+            else
+            {
+                response.StatusCode = 200;
+                response.Data = allUser;
+
+            }
+
+            return response;
+        }
+
+
+
+
+
+
+
+        #endregion
+
 
         public async Task<IdentityResult> GetAccessFailedAsync(TblApplicationUser user)
         {
@@ -85,11 +155,7 @@ namespace Radhey.Repository.Implementation.AccountRepo
             var a = await _userManager.ChangePhoneNumberAsync(user, changePhoneNumber, token);
             return a;
         }
-        public async Task<bool> GetCheckPasswordAsync(TblApplicationUser user,string checkPassword)
-        {
-            var a = await _userManager.CheckPasswordAsync(user, checkPassword);
-            return a;
-        }
+        
         public async Task<IdentityResult> GetConfirmEmailAsync(TblApplicationUser user,string token)
         {
             var a = await _userManager.ConfirmEmailAsync(user, token);
@@ -101,21 +167,7 @@ namespace Radhey.Repository.Implementation.AccountRepo
             return a;
         }
 
-        #region CreateAsync   use for User Registration
-        public async Task<IdentityResult> PostCreateAsync(TblApplicationUser user)
-        {
-            var a = await _userManager.CreateAsync(user);
-            return a;
-        }
 
-
-        public async Task<IdentityResult> PostCreateAsync(TblApplicationUser user, string password)
-        {
-            var a = await _userManager.CreateAsync(user, password);
-            return a;
-        }
-
-        #endregion
         public async Task<byte[]> GetCreateSecurityTokenAsync(TblApplicationUser user)
         {
             var a = await _userManager.CreateSecurityTokenAsync(user);
@@ -143,11 +195,7 @@ namespace Radhey.Repository.Implementation.AccountRepo
         //    return a;
         //}
 
-        public async Task<TblApplicationUser?> GetFindByEmailAsync(string email)
-        {
-            var a = await _userManager.FindByEmailAsync(email);
-            return a;
-        }
+
 
         public async Task<TblApplicationUser?> GetFindByIdAsync(string userId)
         {
@@ -610,8 +658,7 @@ namespace Radhey.Repository.Implementation.AccountRepo
         }
         
 
-
-
+      
 
 
 

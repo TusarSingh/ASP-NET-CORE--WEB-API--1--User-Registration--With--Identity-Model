@@ -23,7 +23,7 @@ namespace Radhey.BAL.Implementation.AccountBAL
     {
 
         public readonly IAccountRepo _accountRepo;
-        
+
 
 
         public AccountBAL(IAccountRepo accountRepo)
@@ -40,7 +40,7 @@ namespace Radhey.BAL.Implementation.AccountBAL
             var response = new ResponseComModel();
 
             response = await _accountRepo.UserRegistrationCreateAsync(userRegistrationReq).ConfigureAwait(false);
-            
+
             return response;
 
         }
@@ -54,7 +54,7 @@ namespace Radhey.BAL.Implementation.AccountBAL
             var response = new ResponseComModel();
 
             response = await _accountRepo.UserRegistrationCreateAsyncWithPassword(userRegistrationReq).ConfigureAwait(false);
-            
+
             return response;
 
         }
@@ -65,9 +65,9 @@ namespace Radhey.BAL.Implementation.AccountBAL
 
         #region UserLogin
 
-        public async Task<ResponseComModel> UserLogin(UserLoginReqModel userLoginReq)
+        public async Task<ResponseComModel<object>> UserLogin(UserLoginReqModel userLoginReq)
         {
-            ResponseComModel response;
+            ResponseComModel<object> response = new ResponseComModel<object>();
 
             response = await _accountRepo.UserLogin(userLoginReq).ConfigureAwait(false);
 
@@ -77,7 +77,18 @@ namespace Radhey.BAL.Implementation.AccountBAL
         #endregion
 
 
+        #region GetAllUser
 
+        public async Task<ResponseComModel<object>> GetAllUser()
+        {
+            ResponseComModel<object> response = new ResponseComModel<object>();
 
+            response = await _accountRepo.GetAllUser().ConfigureAwait(false);
+
+            return response;
+
+        }
+
+        #endregion
     }
 }

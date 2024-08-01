@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Radhey.Repository.Interface.IAccountRepo;
+using Radhey.Repository.Interface.IAccountRepo.IIdentity_By_EFC__Repo.IGetAll_Users_With_Identity_By_EFC__Repo;
+using Radhey.Repository.Interface.IAccountRepo.IIdentity_By_EFC__Repo.IUser_Login_With_Identity_By_EFC__Repo;
+using Radhey.Repository.Interface.IAccountRepo.IIdentity_By_EFC__Repo.IUser_Registration_With_Identity_By_EFC__Repo;
+
 
 using Microsoft.AspNetCore.Identity;
 using Radhey.DAL.DatabaseContext;
 using Radhey.DAL.IdentityTables;
 using Radhey.Model.CommonModel;
 using Radhey.Model.RequestModel;
-using Radhey.Repository.Interface.IAccountRepo;
-
 
 
 
@@ -20,21 +23,23 @@ namespace Radhey.Repository.Implementation.AccountRepo
 {
     public class AccountRepo : IAccountRepo
     {
-        private readonly ICustomUserManager _userManager;
-        private readonly ICustomSignInManager _signInManager;
-
-
+        
+        private readonly IUser_Registration_With_Identity_By_EFC__Repo _user_Registration_With_Identity_By_EFC__Repo;
+        private readonly IUser_Login_With_Identity_By_EFC__Repo _user_Login_With_Identity_By_EFC__Repo;
+        private readonly IGetAll_Users_With_Identity_By_EFC__Repo _getAll_Users_With_Identity_By_EFC__Repo;
 
 
 
 
         public AccountRepo(
-                            ICustomUserManager userManager
-                           , ICustomSignInManager signInManager
+                            IUser_Registration_With_Identity_By_EFC__Repo user_Registration_With_Identity_By_EFC__Repo,
+                            IUser_Login_With_Identity_By_EFC__Repo user_Login_With_Identity_By_EFC__Repo,
+                            IGetAll_Users_With_Identity_By_EFC__Repo getAll_Users_With_Identity_By_EFC__Repo
                           )
         {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
+            this._user_Registration_With_Identity_By_EFC__Repo = user_Registration_With_Identity_By_EFC__Repo;
+            this._user_Login_With_Identity_By_EFC__Repo = user_Login_With_Identity_By_EFC__Repo;
+            this._getAll_Users_With_Identity_By_EFC__Repo = getAll_Users_With_Identity_By_EFC__Repo;
         }
 
 
@@ -48,26 +53,7 @@ namespace Radhey.Repository.Implementation.AccountRepo
         {
             ResponseComModel response = new ResponseComModel();
 
-            TblApplicationUser User = new TblApplicationUser()
-            {
-                FirstName = userRegistrationReq.FirstName,
-                LastName = userRegistrationReq.LastName,
-                UserName = userRegistrationReq.Email,
-                Email = userRegistrationReq.Email,
-                PasswordHash = userRegistrationReq.Password,
-                PhoneNumber = userRegistrationReq.Phone
-            };
-
-            var saveResult = await _userManager.PostCreateAsync(User).ConfigureAwait(false);
-
-            if (saveResult.Succeeded)
-            {
-                response.StatusCode = 200;
-            }
-            else
-            {
-                response.StatusCode = 400;
-            }
+            response = await _user_Registration_With_Identity_By_EFC__Repo.UserRegistrationCreateAsync(userRegistrationReq).ConfigureAwait(false);
 
             return response;
 
@@ -80,29 +66,10 @@ namespace Radhey.Repository.Implementation.AccountRepo
         {
             ResponseComModel response = new ResponseComModel();
 
-            TblApplicationUser User = new TblApplicationUser()
-            {
-                FirstName = userRegistrationReq.FirstName,
-                LastName = userRegistrationReq.LastName,
-                UserName = userRegistrationReq.Email,
-                Email = userRegistrationReq.Email,
-                PasswordHash = userRegistrationReq.Password,
-                PhoneNumber = userRegistrationReq.Phone
-            };
-
-            var saveResult = await _userManager.PostCreateAsync(User,userRegistrationReq.Password).ConfigureAwait(false);
-            
-            if (saveResult.Succeeded)
-            {
-                response.StatusCode = 200;
-            }
-            else
-            {
-                response.StatusCode = 400;
-            }
+            response = await _user_Registration_With_Identity_By_EFC__Repo.UserRegistrationCreateAsyncWithPassword(userRegistrationReq).ConfigureAwait(false);
 
             return response;
-            
+
         }
 
         #endregion
@@ -112,47 +79,28 @@ namespace Radhey.Repository.Implementation.AccountRepo
 
         #region UserLogin
 
-        public async Task<ResponseComModel> UserLogin(UserLoginReqModel userLoginReq)
+        public async Task<ResponseComModel<object>> UserLogin(UserLoginReqModel userLoginReq)
         {
-            ResponseComModel response = new ResponseComModel();
+            ResponseComModel<object> response = new ResponseComModel<object>();
 
-            TblApplicationUser tblApplicationUser = new TblApplicationUser();
-
-            var chkUserEmail = await _userManager.GetFindByEmailAsync(userLoginReq.Email).ConfigureAwait(false);
-        
-            if (chkUserEmail != null)
-            {
-                var chkPass = await _userManager.GetCheckPasswordAsync(chkUserEmail, userLoginReq.Password).ConfigureAwait(false);
-
-
-
-                if (chkPass)
-                {
-                    //var userLogin = await _signInManager.PasswordSignInAsync(chkUserEmail, userLoginReq.Password, false, false);
-                    var userLogin = await _signInManager.GetPasswordSignInAsync(userLoginReq.Email, userLoginReq.Password, false, false);
-                    
-                    
-                    response.StatusCode = 200;
-
-                }
-                else
-                {
-                    response.StatusCode = 400;
-                    response.StatusMessage = "Password is Wrong.";
-                }
-            }
-            else
-            {
-                response.StatusCode = 401;
-                response.StatusMessage = "Please Check your Email";
-            }
+            response = await _user_Login_With_Identity_By_EFC__Repo.UserLogin(userLoginReq).ConfigureAwait(false);;
 
             return response;
         }
 
-
         #endregion
 
+        #region GetAllUser
+        public async Task<ResponseComModel<object>> GetAllUser()
+        {
+            ResponseComModel<object> response = new ResponseComModel<object>();
+
+            response = await _getAll_Users_With_Identity_By_EFC__Repo.GetAllUser().ConfigureAwait(false);
+
+            return response;
+        }
+
+        #endregion
 
     }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Radhey.DAL.IdentityTables;
+using Radhey.Model.CommonModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,14 @@ namespace Radhey.Repository.Interface.IAccountRepo
     public interface ICustomUserManager
     {
 
+        // use Properties
 
-        public  Task<IdentityResult> GetAccessFailedAsync(TblApplicationUser user);
+        #region Use Properties for GetAllUsers
+        public Task<ResponseComModel<object>> GetUser();
+
+        #endregion
+
+        public Task<IdentityResult> GetAccessFailedAsync(TblApplicationUser user);
 
 
         public Task<IdentityResult> GetAddClaimAsync(TblApplicationUser user, Claim claim);
